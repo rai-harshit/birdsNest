@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<% include ../partials/head %>
+	<meta name="google-signin-client_id" content="933883680269-pp63v08kkrnl66k4rjcto1sqprg8gc1a.apps.googleusercontent.com">
+
+	<script src="https://apis.google.com/js/client:platform.js?onload=renderButton" async defer></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+	<div class="homepage">
+		<div class="heads">
+			<header>
+			<div id="company">
+				<a href='/' style="text-decoration: none; color:white">
+					FLO<b>labs</b>
+				</a>
+			</div>
+			</header>
+			<div class="login-form">	
+				<div style="text-align: right">
+					<form  method="POST" action="/login_verification">
+						<input type="email" name="email" placeholder="Email / Handle" required>
+						<input type="password" name="pwd" placeholder="Password" required>
+						<input type="submit" name="submit" id="login_submit" value="Get In" style="width: auto;margin-right:15px">
+					</form>
+					<a id='forgot_pass' href="/">Forgot Password ?</a>
+				</div>
+			</div>
+		</div>
+		<br>
+		<div class="signup" style="margin-top: 40px">
+			<div style="padding: 15px"><center><b>Create an Account, its FREE !</b></center></div>
+				<div class="signup-form" >
+					<form class="signup-inputs"  method="POST" action="/signup_verification">
+						<input type="text" name="fname" placeholder="First Name">
+						<input type="text" name="lname" placeholder="Last Name">
+						<input type="email" name="email" placeholder="Email">
+						<input type="password" name="pwd" placeholder="Password">
+						<input type="submit" name="submit" id="signup_submit" value="EXPLORE">
+					</form>
+				</div>
+					<center><b>OR</b></center>
+				<div class='sm'>
+					<div class="g-signin2" data-onsuccess="onSignIn" data-width="165" style="margin-bottom: 5px"></div>
+						<!-- <img src='images/google.png' id='sm_image'> -->
+					<!-- SignOut and AutoLogoutLink has been added for testing purpose. Will be removed later when SignOut button is added -->
+					<div>
+						<!-- autologoutlink="true" to get a logout button-->
+						<fb:login-button size='large' autologoutlink="true" onlogin="fb_login();">
+						</fb:login-button>
+					</div>
+					<!--<div>
+							<a href="#" onclick="FB.logout();">Sign Out</a>
+					</div> -->
+					<!--<div>
+					<a href='signup.html'><img src='images/fb.png' id='sm_image'></a>
+					</div> -->
+				</div>
+				<div>
+						<a href="#" onclick="signOut();">Sign Out</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

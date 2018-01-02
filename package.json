@@ -1,0 +1,28 @@
+{
+  "name": "birds_nest",
+  "version": "1.0.0",
+  "description": "birdsNest (FlowLabs)",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StanHR/birdsNest.git"
+  },
+  "author": "Harshit Rai",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/StanHR/birdsNest/issues"
+  },
+  "homepage": "https://github.com/StanHR/birdsNest#readme",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "mongodb": "^3.0.1",
+    "mongoose": "^5.0.0-rc0"
+  }
+}
