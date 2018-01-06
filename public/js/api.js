@@ -1,17 +1,16 @@
 window.fbAsyncInit = function() {
 	FB.init({
 	      appId            : '167899873956928',
-	      autoLogAppEvents : true,
+	      autoLogAppEvents : false,
 	      xfbml            : true,
 	      version          : 'v2.11',
 	      oauth			   : true,
 	      cookie		   : true
 	});
 
-	// var hello = FB.getLoginStatus(function(response) {
-	//     login_status = response.status;
-	//     console.log(login_status);
-	// });
+	FB.getLoginStatus((response)=>{
+		statusChangeCallback(response);
+	});
 
 };
 
@@ -24,26 +23,42 @@ window.fbAsyncInit = function() {
 	 fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
-	//function used to login to facebook and get all user data
-function fb_login(){
-     FB.api('/me',{ fields: 'id, first_name, last_name, email, gender, age_range, picture' }, function(response) {
-       console.log('Good to see you, ' + response.first_name + '.');
-       var fb_data = {
+function statusCheck(){
+	FB.getLoginStatus((response)=>{
+		statusChangeCallback(response);
+	});
+}
+
+
+function statusChangeCallback(response){
+	if(response.status === 'connected'){
+		console.log("Connected");
+		fb_login(response);
+	}else{
+		console.log("Not Connected");
+	}
+}
+//function used to login to facebook and get all user data
+function fb_login(response){
+	FB.api('/me',{ fields: 'id, first_name, last_name, email, age_range, picture' }, function(response) {
+        console.log('Good to see you, ' + response.first_name + '.');
+        var fb_data = {
        	data_source : 'facebook',
-       	id : response.id,
+       	social_id : response.id,
        	fname : response.first_name,
        	lname : response.last_name,
        	email : response.email,
        	gender : response.gender,
        	disp_picture : response.picture.data.url
-       }				       
+        }		
+        console.log(fb_data);		       
 		$.ajax({
 		  type: 'POST',
 		  url: '/signup_verification',
 		  data: fb_data,
 		  async:true
 		});
-     });
+ 	});
 }
 
 
@@ -63,12 +78,13 @@ function onSignIn(googleUser) {
 	// console.log('Last Name: ' + profile.getFamilyName());
 	var google_data = {
 		data_source : 'google',
-		id : profile.getId(),
+		social_id : profile.getId(),
 		fname :  profile.getGivenName(),
 		lname : profile.getFamilyName(),
 		email : profile.getEmail(),			
 		disp_picture : profile.getImageUrl(),
 	};
+	console.log(google_data);
 	$.ajax({
 	  type: 'POST',
 	  url: '/signup_verification',

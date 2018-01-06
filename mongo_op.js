@@ -5,7 +5,7 @@ const url = 'mongodb://localhost:27017';
 const dbName = 'FloLabs';
 const saltRounds = 10;
 
-var createAccount = (data,collection_name)=>{
+var form_signup = (data)=>{
 	//console.log(data);
 	//console.log(collection_name);
 	MongoClient.connect(url,(err,client)=> {
@@ -15,7 +15,7 @@ var createAccount = (data,collection_name)=>{
 
 		//console.log("Successfully connected to the Database.");
 		const db = client.db(dbName);
-		const collection = db.collection(collection_name);
+		const collection = db.collection('accounts');
 		
 		collection.find({email : data.email}).toArray((err, result)=>{
 		    if (err) throw err;
@@ -28,7 +28,7 @@ var createAccount = (data,collection_name)=>{
 		    		if(err){
 		    			console.log("Could not create account at the moment. Try again later.")
 		    		}else{
-		    			console.log("Successfully created a new account.");
+		    			console.log("Successfully created a new account.Please check your email to confirm the account activation.");
 		    			client.close();
 		    		}
 		    	});  	
@@ -36,6 +36,43 @@ var createAccount = (data,collection_name)=>{
   		});
 	});
 };
+
+
+
+
+
+var fb_google_signup = (data,req,res)=>{
+	MongoClient.connect(url,(err,client)=> {
+		if(err){
+			return("Error Occured while connecting to the Database.");
+		}
+
+		//console.log("Successfully connected to the Database.");
+		const db = client.db(dbName);
+		const collection = db.collection('accounts');
+		
+		collection.find({email:data.email,social_id:data.social_id}).toArray((err, result)=>{
+		    if (err) throw err;
+		    //console.log(hash);
+		    //console.log(data.password);
+		    if(result.length > 0){
+		    	console.log("Account found. Redirecting to your account...");
+		    }else{
+		    	collection.insert(data,(err,res)=>{
+		    		if(err){
+		    			console.log("Could not create account at the moment. Try again later.")
+		    		}else{
+		    			console.log("Successfully created a new account.");
+		    			client.close();
+		    		}
+		    	});  	
+		    }
+  		});
+	});	
+}
+
+
+
 
 
 var accLogin = (data)=>{
@@ -72,6 +109,7 @@ var accLogin = (data)=>{
 
 
 module.exports = {
-	createAccount,
-	accLogin
+	form_signup,
+	fb_google_signup,
+	accLogin,
 }
