@@ -56,13 +56,13 @@ var fb_google_signup = (data,req,res)=>{
 		    //console.log(hash);
 		    //console.log(data.password);
 		    if(result.length > 0){
-		    	console.log("Account found. Redirecting to your account...");
+		    	console.log("Account found. Redirecting to your Dashboard...");
 		    }else{
 		    	collection.insert(data,(err,res)=>{
 		    		if(err){
 		    			console.log("Could not create account at the moment. Try again later.")
 		    		}else{
-		    			console.log("Successfully created a new account.");
+		    			console.log("Successfully created a new account. Redirecting you to your Dashboard.")
 		    			client.close();
 		    		}
 		    	});  	
@@ -96,7 +96,7 @@ var accLogin = (data)=>{
 						console.log("Error Occured while logging in.");
 					}else{
 						if(res == true){
-							console.log("Correct credentials provided. Logging into your account...");
+							console.log("Correct credentials provided. Redirecting you to your Dashboard.");
 						}else{
 							console.log("You've entered a wrong password. Please try again.");
 						}	
